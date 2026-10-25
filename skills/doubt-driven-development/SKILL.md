@@ -137,15 +137,19 @@ This question is mandatory in every interactive doubt cycle — even on artifact
 Example shapes (verify flags against your installed tool — syntax differs across implementations and versions):
 
 ```bash
-# Write the adversarial prompt + ARTIFACT + CONTRACT to a temp file first.
+# Write the adversarial prompt + ARTIFACT + CONTRACT to a private temp file
+# from mktemp (unique name, owner-only permissions), never a fixed shared name.
+PROMPT_FILE="$(mktemp)"
 # Then pipe via stdin so shell metacharacters in the artifact stay inert.
 
 # Codex (read-only sandbox keeps the CLI from writing to your workspace):
-codex exec --sandbox read-only -C <repo-path> - < /tmp/doubt-prompt.md
+codex exec --sandbox read-only -C <repo-path> - < "$PROMPT_FILE"
 
 # Gemini ('--approval-mode plan' is read-only; '-p ""' triggers non-interactive
 # mode and the prompt is read from stdin):
-gemini --approval-mode plan -p "" < /tmp/doubt-prompt.md
+gemini --approval-mode plan -p "" < "$PROMPT_FILE"
+
+rm -f "$PROMPT_FILE"
 ```
 
 A read-only sandbox is the load-bearing detail: a doubt artifact may itself contain instructions (intentional or accidental prompt injection) that the cross-model CLI would otherwise execute against your workspace.
