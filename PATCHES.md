@@ -8,3 +8,4 @@ Every skill on this branch that is changed from the Upstream, with its Patch log
 | skills/deprecation-and-migration | 1 | [patches.md](skills/deprecation-and-migration/patches.md) |
 | skills/doubt-driven-development | 1 | [patches.md](skills/doubt-driven-development/patches.md) |
 | skills/git-workflow-and-versioning | 1 | [patches.md](skills/git-workflow-and-versioning/patches.md) |
+| skills/incremental-implementation | 1 | [patches.md](skills/incremental-implementation/patches.md) |
