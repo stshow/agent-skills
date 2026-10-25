@@ -186,7 +186,7 @@ Agent starts work
     └── Feature complete → All commits form a clean history
 ```
 
-This pattern means you never lose more than one increment of work. If an agent goes off the rails, `git reset --hard HEAD` takes you back to the last successful state.
+This pattern means you never lose more than one increment of work. If an agent goes off the rails, `git restore --staged --worktree -- <files you changed>` takes those files back to the last successful state without discarding other uncommitted work in the tree.
 
 ## Change Summaries
 
@@ -226,7 +226,7 @@ npm test
 npm run lint
 
 # 5. Run type checking
-npx tsc --noEmit
+npx --no-install tsc --noEmit   # runs only the project's installed TypeScript; never downloads a package
 ```
 
 Automate this with git hooks:
@@ -291,6 +291,8 @@ A release is an immutable point in history, not a moving branch. Tag it so it ca
 git tag -a v1.4.0 -m "Release 1.4.0"
 git push origin v1.4.0
 ```
+
+Push tags and branches to a remote only when the user asked for a push or release in the current task.
 
 Derive the version from the tag rather than hand-editing it in scattered files, so the artifact, the tag, and the changelog can never disagree.
 
